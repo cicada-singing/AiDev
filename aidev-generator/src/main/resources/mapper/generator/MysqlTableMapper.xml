@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aidev.generator.mapper.MysqlTableMapper">
+    <resultMap id="r_m" type="GenTable">
+        <id column="table_id" property="tableId"/>
+        <result column="table_name" property="tableName"/>
+        <result column="table_comment" property="tableComment"/>
+        <result column="sub_table_name" property="subTableName"/>
+        <result column="sub_table_fk_name" property="subTableFkName"/>
+        <result column="class_name" property="className"/>
+        <result column="tpl_category" property="tplCategory"/>
+        <result column="package_name" property="packageName"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="business_name" property="businessName"/>
+        <result column="function_name" property="functionName"/>
+        <result column="function_author" property="functionAuthor"/>
+        <result column="gen_type" property="genType"/>
+        <result column="gen_path" property="genPath"/>
+        <result column="options" property="options"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <resultMap id="r_m_e" type="GenTable" extends="r_m">
+        <collection column="table_id" property="columns"
+                    select="com.aidev.generator.mapper.GenTableColumnMapper.selectByTableId"/>
+    </resultMap>
+
+    <sql id="s_f_s">
+        SELECT table_name, table_comment, create_time, update_time
+        FROM information_schema.tables
+    </sql>
+
+    <sql id="w_s">
+        table_schema = (SELECT database())
+                AND table_name NOT LIKE 'aidev_qrtz_%'
+                AND table_name NOT LIKE 'aidev_gen_%'
+    </sql>
+
+    <select id="selectDbTableList" parameterType="GenTable" resultMap="r_m">
+        <include refid="s_f_s"/>
+        <where>
+            <include refid="w_s"/>
+            AND table_name NOT IN (SELECT table_name FROM aidev_gen_table)
+            <if test="tableName != null and tableName != ''">
+                AND lower(table_name) LIKE lower(concat('%', #{tableName}, '%'))
+            </if>
+            <if test="tableComment != null and tableComment != ''">
+                AND lower(table_comment) LIKE lower(concat('%', #{tableComment}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDbTableListByNames" resultMap="r_m">
+        <include refid="s_f_s"/>
+        <where>
+            <include refid="w_s"/>
+            AND table_name IN
+            <foreach collection="array" item="name" open="(" separator="," close=")">
+                #{name}
+            </foreach>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+package ${packageName}.service.impl;
+
+import ${packageName}.domain.${ClassName};
+import ${packageName}.mapper.${ClassName}Mapper;
+import ${packageName}.service.I${ClassName}Service;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * ${functionName}Service实现
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}> implements I${ClassName}Service {
+    /**
+     * 查询${functionName}列表
+     *
+     * @param domain ${functionName}
+     * @return ${functionName}
+     */
+    @Override
+    public List<${ClassName}> select${ClassName}List(${ClassName} domain) {
+        return lambdaQuery()
+#foreach($column in $columns)
+#if($column.javaType == 'String')
+#set($boolFlag='StringUtils.isNotBlank')
+#else
+#set($boolFlag='Objects.nonNull')
+#end
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#if($column.queryType == "EQ")
+                .eq(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "NE")
+                .ne(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "GT")
+                .gt(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "GTE")
+                .ge(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "LT")
+                .lt(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "LTE")
+                .le(${boolFlag}(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "LIKE")
+                .like(StringUtils.isNotBlank(domain.get${AttrName}()), ${ClassName}::get${AttrName}, domain.get${AttrName}())
+#elseif($column.queryType == "BETWEEN")
+                .between(Objects.nonNull(domain.get${AttrName}Start()) && Objects.nonNull(domain.get${AttrName}End()), ${ClassName}::get${AttrName}, domain.get${AttrName}Start(), domain.get${AttrName}End())
+#end
+#end
+                .list();
+    }
+}

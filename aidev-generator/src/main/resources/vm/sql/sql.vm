@@ -1,0 +1,47 @@
+-- MySQL --
+-- 菜单 SQL
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (${table.menuId}, '${functionName}', '${parentMenuId}', '1', '/${moduleName}/${businessName}', 'C', '0', '${permissionPrefix}:view', '#', 'admin', sysdate(), '', null, '${functionName}菜单');
+-- 按钮 SQL
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}查询', ${table.menuId}, '1', '#', 'F', '0', '${permissionPrefix}:list',   '#', 'admin', sysdate(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}新增', ${table.menuId}, '2', '#', 'F', '0', '${permissionPrefix}:add',    '#', 'admin', sysdate(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}修改', ${table.menuId}, '3', '#', 'F', '0', '${permissionPrefix}:edit',   '#', 'admin', sysdate(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}删除', ${table.menuId}, '4', '#', 'F', '0', '${permissionPrefix}:remove', '#', 'admin', sysdate(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}导出', ${table.menuId}, '5', '#', 'F', '0', '${permissionPrefix}:export', '#', 'admin', sysdate(), '', null, '');
+
+-- Oracle --
+-- 菜单 SQL
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (${table.menuId}, '${functionName}', '${parentMenuId}', '1', '/${moduleName}/${businessName}', 'C', '0', '${permissionPrefix}:view', '#', 'admin', sysdate, '', null, '${functionName}菜单');
+-- 按钮 SQL
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (seq_aidev_sys_menu.nextval, '${functionName}查询', ${table.menuId}, '1', '#', 'F', '0', '${permissionPrefix}:list',   '#', 'admin', sysdate, '', null, '');
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (seq_aidev_sys_menu.nextval, '${functionName}新增', ${table.menuId}, '2', '#', 'F', '0', '${permissionPrefix}:add',    '#', 'admin', sysdate, '', null, '');
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (seq_aidev_sys_menu.nextval, '${functionName}修改', ${table.menuId}, '3', '#', 'F', '0', '${permissionPrefix}:edit',   '#', 'admin', sysdate, '', null, '');
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (seq_aidev_sys_menu.nextval, '${functionName}删除', ${table.menuId}, '4', '#', 'F', '0', '${permissionPrefix}:remove', '#', 'admin', sysdate, '', null, '');
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (seq_aidev_sys_menu.nextval, '${functionName}导出', ${table.menuId}, '5', '#', 'F', '0', '${permissionPrefix}:export', '#', 'admin', sysdate, '', null, '');
+
+-- PostgreSQL --
+-- 菜单 SQL
+INSERT INTO aidev_sys_menu (menu_id, menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES (${table.menuId}, '${functionName}', '${parentMenuId}', '1', '/${moduleName}/${businessName}', 'C', '0', '${permissionPrefix}:view', '#', 'admin', now(), '', null, '${functionName}菜单');
+-- 按钮 SQL
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}查询', ${table.menuId}, '1', '#', 'F', '0', '${permissionPrefix}:list',   '#', 'admin', now(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}新增', ${table.menuId}, '2', '#', 'F', '0', '${permissionPrefix}:add',    '#', 'admin', now(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}修改', ${table.menuId}, '3', '#', 'F', '0', '${permissionPrefix}:edit',   '#', 'admin', now(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}删除', ${table.menuId}, '4', '#', 'F', '0', '${permissionPrefix}:remove', '#', 'admin', now(), '', null, '');
+INSERT INTO aidev_sys_menu (menu_name, parent_id, order_num, url, menu_type, visible, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('${functionName}导出', ${table.menuId}, '5', '#', 'F', '0', '${permissionPrefix}:export', '#', 'admin', now(), '', null, '');

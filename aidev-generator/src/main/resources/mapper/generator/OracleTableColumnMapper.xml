@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aidev.generator.mapper.OracleTableColumnMapper">
+    <resultMap id="r_m" type="GenTableColumn">
+        <id column="column_id" property="columnId"/>
+        <result column="table_id" property="tableId"/>
+        <result column="column_name" property="columnName"/>
+        <result column="column_comment" property="columnComment"/>
+        <result column="column_type" property="columnType"/>
+        <result column="java_type" property="javaType"/>
+        <result column="java_field" property="javaField"/>
+        <result column="is_pk" property="isPk"/>
+        <result column="is_increment" property="isIncrement"/>
+        <result column="is_required" property="isRequired"/>
+        <result column="is_insert" property="isInsert"/>
+        <result column="is_edit" property="isEdit"/>
+        <result column="is_list" property="isList"/>
+        <result column="is_query" property="isQuery"/>
+        <result column="query_type" property="queryType"/>
+        <result column="html_type" property="htmlType"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="sort" property="sort"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectDbTableColumnsByName" parameterType="String" resultMap="r_m">
+        SELECT lower(temp.column_name)                                                                 column_name,
+               (CASE WHEN (temp.nullable = 'N' and temp.constraint_type != 'P') then '1' ELSE '0' end) is_required,
+               (CASE WHEN temp.constraint_type = 'P' THEN '1' ELSE '0' END)                            is_pk,
+               temp.column_id                                                                          sort,
+               temp.comments                                                                           column_comment,
+               (CASE WHEN temp.constraint_type = 'P' THEN '1' ELSE '0' END)                            is_increment,
+               lower(temp.data_type)                                                                   column_type
+        FROM (SELECT utc.column_id
+                   , utc.column_name
+                   , utc.nullable
+                   , utc.data_type
+                   , ucc1.comments
+                   , uc.constraint_type
+                   , row_number() OVER (PARTITION BY utc.column_name ORDER BY uc.constraint_type DESC) row_flg
+              FROM user_tab_columns utc
+                           LEFT JOIN user_col_comments ucc1 ON utc.table_name = ucc1.table_name AND utc.column_name = ucc1.column_name
+                           LEFT JOIN user_cons_columns ucc2 ON utc.table_name = ucc2.table_name AND utc.column_name = ucc2.column_name
+                           LEFT JOIN user_constraints uc ON ucc2.constraint_name = uc.constraint_name
+              WHERE utc.table_name = upper(#{tableName})
+              ) temp
+        WHERE temp.row_flg = 1
+        ORDER BY temp.column_id
+    </select>
+</mapper>

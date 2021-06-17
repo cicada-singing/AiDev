@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aidev.generator.mapper.MysqlTableColumnMapper">
+    <resultMap id="r_m" type="GenTableColumn">
+        <id column="column_id" property="columnId"/>
+        <result column="table_id" property="tableId"/>
+        <result column="column_name" property="columnName"/>
+        <result column="column_comment" property="columnComment"/>
+        <result column="column_type" property="columnType"/>
+        <result column="java_type" property="javaType"/>
+        <result column="java_field" property="javaField"/>
+        <result column="is_pk" property="isPk"/>
+        <result column="is_increment" property="isIncrement"/>
+        <result column="is_required" property="isRequired"/>
+        <result column="is_insert" property="isInsert"/>
+        <result column="is_edit" property="isEdit"/>
+        <result column="is_list" property="isList"/>
+        <result column="is_query" property="isQuery"/>
+        <result column="query_type" property="queryType"/>
+        <result column="html_type" property="htmlType"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="sort" property="sort"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectDbTableColumnsByName" parameterType="String" resultMap="r_m">
+        SELECT column_name,
+               (CASE WHEN (is_nullable = 'no' <![CDATA[ && ]]> column_key != 'PRI') THEN '1' ELSE '0' END) is_required,
+               (CASE WHEN column_key = 'PRI' THEN '1' ELSE '0' END)                          is_pk,
+               ordinal_position                                                              sort,
+               column_comment,
+               (CASE WHEN extra = 'auto_increment' THEN '1' ELSE '0' END)                    is_increment,
+               column_type
+        FROM information_schema.columns
+        WHERE table_schema = (select database())
+          AND table_name = #{tableName}
+        ORDER BY ordinal_position
+    </select>
+</mapper>

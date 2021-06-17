@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aidev.generator.mapper.OracleTableMapper">
+    <resultMap id="r_m" type="GenTable">
+        <id column="table_id" property="tableId"/>
+        <result column="table_name" property="tableName"/>
+        <result column="table_comment" property="tableComment"/>
+        <result column="sub_table_name" property="subTableName"/>
+        <result column="sub_table_fk_name" property="subTableFkName"/>
+        <result column="class_name" property="className"/>
+        <result column="tpl_category" property="tplCategory"/>
+        <result column="package_name" property="packageName"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="business_name" property="businessName"/>
+        <result column="function_name" property="functionName"/>
+        <result column="function_author" property="functionAuthor"/>
+        <result column="gen_type" property="genType"/>
+        <result column="gen_path" property="genPath"/>
+        <result column="options" property="options"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <resultMap id="r_m_e" type="GenTable" extends="r_m">
+        <collection column="table_id" property="columns"
+                    select="com.aidev.generator.mapper.GenTableColumnMapper.selectByTableId"/>
+    </resultMap>
+
+    <sql id="s_f_s">
+        SELECT lower(ut.table_name) table_name,
+               utc.comments         table_comment,
+               uo.created           create_time,
+               uo.last_ddl_time     update_time
+        FROM user_tables ut,
+             user_tab_comments utc,
+             user_objects uo
+    </sql>
+
+    <sql id="w_s">
+        ut.table_name = utc.table_name
+                AND ut.table_name = uo.object_name
+                AND uo.object_type = 'TABLE'
+                AND ut.table_name NOT LIKE 'AIDEV_QRTZ_%'
+                AND ut.table_name NOT LIKE 'AIDEV_GEN_%'
+    </sql>
+
+    <select id="selectDbTableList" parameterType="GenTable" resultMap="r_m">
+        <include refid="s_f_s"/>
+        <where>
+            <include refid="w_s"/>
+            AND ut.table_name NOT IN (SELECT table_name FROM aidev_gen_table)
+            <if test="tableName != null and tableName != ''">
+                AND lower(ut.table_name) LIKE lower(concat(concat('%', #{tableName}), '%'))
+            </if>
+            <if test="tableComment != null and tableComment != ''">
+                AND lower(utc.comments) LIKE lower(concat(concat('%', #{tableComment}), '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDbTableListByNames" resultMap="r_m">
+        <include refid="s_f_s"/>
+        <where>
+            <include refid="w_s"/>
+            AND lower(ut.table_name) IN
+            <foreach collection="array" item="name" open="(" separator="," close=")">
+                #{name}
+            </foreach>
+        </where>
+    </select>
+</mapper>
