@@ -4,6 +4,8 @@
 
 隔离 RMDBS SQL dialect（使用 Generic SQL），主数据源已支持 MySQL、Oracle、PostgreSQL。
 
+隔离多数据源主键 ID 生成，同时考虑到浏览器端 JavaScript 对整型上限的支持，采用 53bits Snowflake 算法。
+
 引入 Lombok、Mybatis-Plus 简化开发。
 
 基于 RuoYi v4.6.1。
