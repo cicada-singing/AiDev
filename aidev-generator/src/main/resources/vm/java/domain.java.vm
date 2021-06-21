@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * ${functionName}Domain
+ * ${functionName} Domain
  *
  * @author ${author}
  * @date ${datetime}

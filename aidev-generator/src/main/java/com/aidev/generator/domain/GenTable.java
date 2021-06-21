@@ -142,6 +142,31 @@ public class GenTable extends BaseEntityWithRemark {
      */
     @TableField(exist = false)
     private Long menuId;
+    /**
+     * list菜单ID
+     */
+    @TableField(exist = false)
+    private Long listMenuId;
+    /**
+     * add菜单ID
+     */
+    @TableField(exist = false)
+    private Long addMenuId;
+    /**
+     * edit菜单ID
+     */
+    @TableField(exist = false)
+    private Long editMenuId;
+    /**
+     * remove菜单ID
+     */
+    @TableField(exist = false)
+    private Long removeMenuId;
+    /**
+     * export菜单ID
+     */
+    @TableField(exist = false)
+    private Long exportMenuId;
 
     public static boolean isSub(String tplCategory) {
         return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);

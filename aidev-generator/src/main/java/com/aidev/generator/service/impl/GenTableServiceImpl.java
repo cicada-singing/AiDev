@@ -148,7 +148,13 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     public Map<String, String> previewCode(Long tableId) {
         Map<String, String> dataMap = new LinkedHashMap<>();
         // 查询表信息
-        GenTable table = getById(tableId).setMenuId(IdUtils.nextId());
+        GenTable table = getById(tableId)
+                .setMenuId(IdUtils.nextId())
+                .setListMenuId(IdUtils.nextId())
+                .setAddMenuId(IdUtils.nextId())
+                .setEditMenuId(IdUtils.nextId())
+                .setRemoveMenuId(IdUtils.nextId())
+                .setExportMenuId(IdUtils.nextId());
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
@@ -193,7 +199,13 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     @Override
     public void generatorCode(String tableName) {
         // 查询表信息
-        GenTable table = lambdaQuery().eq(GenTable::getTableName, tableName).one().setMenuId(IdUtils.nextId());
+        GenTable table = lambdaQuery().eq(GenTable::getTableName, tableName).one()
+                .setMenuId(IdUtils.nextId())
+                .setListMenuId(IdUtils.nextId())
+                .setAddMenuId(IdUtils.nextId())
+                .setEditMenuId(IdUtils.nextId())
+                .setRemoveMenuId(IdUtils.nextId())
+                .setExportMenuId(IdUtils.nextId());
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
@@ -277,7 +289,13 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
      */
     private void generatorCode(String tableName, ZipOutputStream zip) {
         // 查询表信息
-        GenTable table = lambdaQuery().eq(GenTable::getTableName, tableName).one().setMenuId(IdUtils.nextId());
+        GenTable table = lambdaQuery().eq(GenTable::getTableName, tableName).one()
+                .setMenuId(IdUtils.nextId())
+                .setListMenuId(IdUtils.nextId())
+                .setAddMenuId(IdUtils.nextId())
+                .setEditMenuId(IdUtils.nextId())
+                .setRemoveMenuId(IdUtils.nextId())
+                .setExportMenuId(IdUtils.nextId());
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
