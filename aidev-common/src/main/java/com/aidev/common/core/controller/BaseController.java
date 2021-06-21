@@ -103,7 +103,7 @@ public class BaseController {
     /**
      * 响应请求分页数据
      */
-    protected TableDataInfo getPageDataTable(List<?> list) {
+    protected TableDataInfo getDataTable(List<?> list) {
         return new TableDataInfo()
                 .setCode(0)
                 .setTotal(list.size())

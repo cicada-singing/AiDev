@@ -81,7 +81,7 @@ public class GenController extends BaseController {
     @PostMapping("/column/list")
     @ResponseBody
     public TableDataInfo columnList(GenTableColumn genTableColumn) {
-        return getPageDataTable(genTableColumnService.lambdaQuery()
+        return getDataTable(genTableColumnService.lambdaQuery()
                 .eq(GenTableColumn::getTableId, genTableColumn.getTableId())
                 .orderByAsc(GenTableColumn::getSort)
                 .list());
