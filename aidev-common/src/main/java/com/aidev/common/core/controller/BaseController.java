@@ -101,7 +101,7 @@ public class BaseController {
     }
 
     /**
-     * 响应请求分页数据
+     * 响应请求数据
      */
     protected TableDataInfo getDataTable(List<?> list) {
         return new TableDataInfo()
