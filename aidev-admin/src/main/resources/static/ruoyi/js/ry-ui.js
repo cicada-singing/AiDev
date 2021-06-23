@@ -308,6 +308,9 @@ var table = {
                 var _target = $.common.isEmpty(target) ? 'copy' : target;
                 if (_value.length > _length) {
                     _text = _value.substr(0, _length) + "...";
+                    _value = _value.replace(/\</g,"&lt;");
+                    _value = _value.replace(/\>/g,"&gt;");
+                    _value = _value.replace(/\&/g,"&amp;");
                     _value = _value.replace(/\'/g,"&apos;");
                     _value = _value.replace(/\"/g,"&quot;");
                     var actions = [];
