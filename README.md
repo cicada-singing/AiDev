@@ -10,7 +10,7 @@
 
 基于 RuoYi v4.6.1。
 
-同步 RuoYi 提交：5fb9263ff5a977457f51269ab12e10339949687f。
+同步 RuoYi 提交：b57f68ed27bd69944aff82cb30b9bae7e8cd477c。
 
 ## 交流群
 

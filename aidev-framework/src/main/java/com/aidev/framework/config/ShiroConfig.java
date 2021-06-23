@@ -15,7 +15,9 @@ import com.aidev.framework.shiro.web.filter.sync.SyncOnlineSessionFilter;
 import com.aidev.framework.shiro.web.session.OnlineWebSessionManager;
 import com.aidev.framework.shiro.web.session.SpringSessionValidationScheduler;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.mgt.SecurityManager;
@@ -104,6 +106,12 @@ public class ShiroConfig
      */
     @Value("${shiro.cookie.maxAge}")
     private int maxAge;
+
+    /**
+     * 设置cipherKey密钥
+     */
+    @Value("${shiro.cookie.cipherKey}")
+    private String cipherKey;
 
     /**
      * 登录地址
@@ -352,7 +360,14 @@ public class ShiroConfig
     {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
-        cookieRememberMeManager.setCipherKey(CipherUtils.generateNewKey(128, "AES").getEncoded());
+        if (StringUtils.isNotEmpty(cipherKey))
+        {
+            cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));
+        }
+        else
+        {
+            cookieRememberMeManager.setCipherKey(CipherUtils.generateNewKey(128, "AES").getEncoded());
+        }
         return cookieRememberMeManager;
     }
 
