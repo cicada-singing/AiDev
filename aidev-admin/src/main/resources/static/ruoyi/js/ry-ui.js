@@ -308,11 +308,11 @@ var table = {
                 var _target = $.common.isEmpty(target) ? 'copy' : target;
                 if (_value.length > _length) {
                     _text = _value.substr(0, _length) + "...";
+                    _value = _value.replace(/\'/g,"&apos;");
+                    _value = _value.replace(/\"/g,"&quot;");
                     _value = _value.replace(/\</g,"&lt;");
                     _value = _value.replace(/\>/g,"&gt;");
                     _value = _value.replace(/\&/g,"&amp;");
-                    _value = _value.replace(/\'/g,"&apos;");
-                    _value = _value.replace(/\"/g,"&quot;");
                     var actions = [];
                     actions.push($.common.sprintf('<input style="opacity: 0;position: absolute;width:5px;z-index:-1" type="text" value="%s"/>', _value));
                     actions.push($.common.sprintf('<a href="###" class="tooltip-show" data-toggle="tooltip" data-target="%s" title="%s">%s</a>', _target, _value, _text));
