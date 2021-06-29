@@ -2,7 +2,7 @@
 
 ## 特性
 
-隔离主数据源 SQL dialect，目前支持 MySQL、Oracle、PostgreSQL。
+隔离单数据源 SQL dialect，主数据源目前已支持 MySQL、Oracle、PostgreSQL。
 
 隔离多数据源主键 ID 生成，同时考虑到浏览器端 JavaScript 对整型上限的支持，采用 53bits Snowflake 算法。
 
