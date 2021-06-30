@@ -14,7 +14,7 @@ public class AiDevApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(AiDevApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ 爱开发应用启动成功 ლ(´ڡ`ლ)ﾞ\n" +
+        System.out.println("(♥◠‿◠)ﾉﾞ  爱开发应用启动成功   ლ(´ڡ`ლ)ﾞ\n" +
                 "   _   _    ___           \n" +
                 "  /_\\ (_)  /   \\_____   __\n" +
                 " //_\\\\| | / /\\ / _ \\ \\ / /\n" +
